@@ -1,9 +1,9 @@
 import fetch from 'node-fetch';
 
-const clientID = process.env.SPOTIFY_CLIENT_ID || 'dc5794b1767649c59a866c01922b98f1'
-const clientSecret = process.env.SPOTIFY_CLIENT_SECRET || '3cca860520204bfab782aeba0e636135'
-let basicbuff = Buffer.from(`${clientID}:${clientSecret}`);
-let basicAuth = basicbuff.toString('base64');
+const clientID = process.env.SPOTIFY_CLIENT_ID
+const clientSecret = process.env.SPOTIFY_CLIENT_SECRET
+let basicbuff = Buffer.from(`${clientID}:${clientSecret}`)
+let basicAuth = basicbuff.toString('base64')
 
 let accessToken = '12345';
 

@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-const apiToken = process.env.REVERB_TOKEN || '595799e0cae9822f99d4aea062682d7ba9b6e0532456e445d78199f2ecc7a44c'
+const apiToken = process.env.REVERB_TOKEN
 
 let catalog = [];
 
