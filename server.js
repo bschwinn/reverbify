@@ -1,12 +1,10 @@
-import dotenv from 'dotenv';
 import express from 'express'
 import http from 'http';
 import path from 'path'
 
+import './config.js'
 import reverb from './reverb.js'
 import spotify from './spotify.js'
-
-dotenv.config();
 
 const port = Number(process.env.PORT)
 const staticPath = path.join('public')
