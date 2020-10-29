@@ -1,0 +1,39 @@
+:root {
+    --font-family: Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    --row-height: 25px;
+    --color-bg: #fff;
+    --color-bg-alt: #efefef;
+    --color-text: #000;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-bg: #333;
+        --color-bg-alt: #414141;
+        --color-text: #f7f7f7;
+    }
+}
+body {
+    margin: 0;
+    padding: 10px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-family);
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+li {
+    height: var(--row-height);
+    padding: 0;
+    margin-bottom: 5px;
+}
+li div {
+    margin: 5px 0 0 5px;
+    float: left;
+}
+li img {
+    float: left;
+    max-height: var(--row-height);
+}
