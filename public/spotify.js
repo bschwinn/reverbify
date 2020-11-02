@@ -9,11 +9,11 @@ const scopeChoiceHelpResult = [artistHelp, albumHelp, trackHelp];
 const defaultHelpResult = [defaultHelp];
 
 const helpRules = [
-    { matchString: '/spot ', results: defaultHelpResult, scope: 'all' },
-    { matchString: '/spot/', results: scopeChoiceHelpResult },
-    { matchString: '/spot/track ', results: [trackHelp], scope: 'track' },
-    { matchString: '/spot/album ', results: [albumHelp], scope: 'album' },
-    { matchString: '/spot/artist ', results: [artistHelp], scope: 'artist' },
+    { matchString: '/music ', results: defaultHelpResult, scope: 'all' },
+    { matchString: '/music/', results: scopeChoiceHelpResult },
+    { matchString: '/music/track ', results: [trackHelp], scope: 'track' },
+    { matchString: '/music/album ', results: [albumHelp], scope: 'album' },
+    { matchString: '/music/artist ', results: [artistHelp], scope: 'artist' },
 ];
 
 const processQuery = (query) => {

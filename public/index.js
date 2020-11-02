@@ -5,7 +5,7 @@ import reverb from './reverb.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-    const showItem = (item) => {
+    const itemClick = (item) => {
         if (item.source==="spotify") {
             reverb.showItem(item)
         } else if (item.source==="reverb") {
@@ -13,27 +13,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    const getResults = async (query) => {
+    const renderItems = (items) => {
         const resElem = document.getElementById('searchresults');
         resElem.innerHTML = '';
-        const results = await Promise.all([reverb.search(query), spotify.search(query)])
-        if (!results) {
-            return;
-        }
-        const items = results.reduce((p, c) => p.concat(c), []);
         for(let i=0; i<items.length; i++) {
             const li = document.createElement('li');
             if (items[i].icon) {
                 const img = document.createElement('img');
                 img.setAttribute('src', items[i].icon)
-                li.append(img);    
+                li.append(img);
             }
             const span = document.createElement('div');
             span.innerText = items[i].name;
-            span.addEventListener('click', () => showItem(items[i]))
+            span.addEventListener('click', () => itemClick(items[i]))
             li.append(span);
             resElem.append(li);
         }
+    }
+
+    const getResults = async (query) => {
+        const results = await Promise.all([reverb.search(query), spotify.search(query)])
+        if (!results) {
+            return;
+        }
+        const items = results.reduce((p, c) => p.concat(c), []);
+        renderItems(items)
     }
 
     const searchDebounced = tdmod.debounce(500, getResults);
