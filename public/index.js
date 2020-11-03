@@ -59,5 +59,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             onSearch: reverb.search,
             onResultDispatch: reverb.showItem
         });
+        await searchTopic.register({
+            name: "Spotify",
+            onSearch: spotify.search,
+            onResultDispatch: spotify.showItem
+        });
     }
 });
