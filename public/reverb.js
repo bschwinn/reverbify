@@ -18,7 +18,8 @@ const search = async (query) => {
             name: title,
             description: description,
             icon: photos && photos[0] && photos[0]._links.thumbnail.href,
-            data: { id, url: _links.web.href }
+            data: { id, url: _links.web.href },
+            source: 'reverb'
         }));
     }
     return getHelp(helpRules, query)

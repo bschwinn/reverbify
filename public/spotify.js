@@ -34,10 +34,12 @@ const search = async (query) => {
         console.log(`doing a spotify query: q = ${q}, query: ${query}, scope: ${scope}`)
         const res = await fetch(`/spotify?q=${q}&scope=${scope}`);
         const results = await res.json();
-        return results.map(({ id, name, uri, weburl, artists, album, type }) => ({
+        return results.map(({ id, name, uri, artists, album, type, thumbnail }) => ({
             name: formatName(type, name, artists, album),
             description: formatName(type, name, artists, album),
-            data: { id, uri, weburl, type }
+            icon: thumbnail,
+            data: { id, uri, type },
+            source: 'spotify'
         }));    
     }
     return getHelp(helpRules, query)
@@ -45,7 +47,7 @@ const search = async (query) => {
 
 const showItem = (item) => {
     console.log('showing item', item);
-    window.open(item.data.url, 'spotify')
+    window.open(item.data.uri, 'spotify')
 }
 
 export default { search, showItem }

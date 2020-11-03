@@ -30,18 +30,18 @@ const refreshToken = async (query, scope) => {
 const transform = (json,scope) => {
     let allResults = [];
     if (json.albums) {
-        allResults = allResults.concat(json.albums.items.map( ({id, name, uri, external_urls, artists}) => {
-            return { id, name, uri, weburl: external_urls.spotify, artists: artists.map((a)=>a.name), type: "album"}
+        allResults = allResults.concat(json.albums.items.map( ({id, name, uri, artists, images}) => {
+            return { id, name, uri, artists: artists.map((a)=>a.name), thumbnail: images && images.length>0 && images[0].url, type: "album"}
         }))    
     }
     if (json.artists) {
-        allResults = json.artists.items.map( ({id, name, uri, external_urls}) => {
-            return { id, name, uri, weburl: external_urls.spotify, type: "artist"}
+        allResults = json.artists.items.map( ({id, name, uri, images}) => {
+            return { id, name, uri, thumbnail: images && images.length>0 && images[0].url, type: "artist"}
         })    
     }
     if (json.tracks) {
-        allResults = allResults.concat(json.tracks.items.map( ({id, name, uri, external_urls, artists, album}) => {
-            return { id, name, uri, album: album.name, artists: artists.map((a)=>a.name), weburl: external_urls.spotify, type: "track"}
+        allResults = allResults.concat(json.tracks.items.map( ({id, name, uri, artists, album}) => {
+            return { id, name, uri, album: album.name, artists: artists.map((a)=>a.name), thumbnail: album.images && album.images.length>0 && album.images[0].url, type: "track"}
         }))
     }
     return allResults

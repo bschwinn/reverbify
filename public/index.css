@@ -1,9 +1,10 @@
 :root {
     --font-family: Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    --row-height: 25px;
+    --row-height: 64px;
     --color-bg: #fff;
     --color-bg-alt: #efefef;
     --color-text: #000;
+    --img-height: 64px;
 }
 @media (prefers-color-scheme: dark) {
     :root {
@@ -35,5 +36,5 @@ li div {
 }
 li img {
     float: left;
-    max-height: var(--row-height);
+    max-height: var(--img-height);
 }
