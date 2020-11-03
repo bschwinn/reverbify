@@ -1,4 +1,4 @@
-import {getHelp} from './utils.js';
+import {getHelp, processQuery} from './utils.js';
 
 const defaultHelp = { id: 'help', name: "/rev <search>", description: "Sample command for opening up a teams conversation with someone.", data: { sample: true }, icon: "https://reverb.com/favicon.ico" };
 const defaultHelpResult = [defaultHelp];
@@ -9,8 +9,9 @@ const helpRules = [
 ];
 
 const search = async (query) => {
-    const q = query.replace(command, '')
+    const { q, scope } = processQuery(query, helpRules);
     if (q && q !== "") {
+        console.log(`doing a reverb query: q = ${q}, query: ${query}`)
         const res = await fetch(`/reverb?q=${q}`);
         const listings = await res.json();
         return listings.map(({ id, title, description, _links, photos }) => ({

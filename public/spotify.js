@@ -1,30 +1,21 @@
-import {getHelp} from './utils.js';
+import {getHelp, processQuery} from './utils.js';
+
+const command = '/spot';
+const commandDelim = '/';
 
 // help stuff
-const defaultHelp = { id: 'all', name: "/spot <album artist or track name>", description: "Search spotify for artists, albums or songs.", data: { sample: true }, icon: "https://spotify.com/favicon.ico" };
-const artistHelp = { id: 'artist', name: "/spot/artist <artist name>", description: "Search spotify for artists.", data: { sample: true }, icon: "https://spotify.com/favicon.ico" };
-const trackHelp = { id: 'track', name: "/spot/track <artist name>", description: "Search spotify for tracks.", data: { sample: true }, icon: "https://spotify.com/favicon.ico" };
-const albumHelp = { id: 'album', name: "/spot/album <artist name>", description: "Search spotify for albums.", data: { sample: true }, icon: "https://spotify.com/favicon.ico" };
-const scopeChoiceHelpResult = [artistHelp, albumHelp, trackHelp];
+const defaultHelp = { id: 'all', name: `${command} <album artist or track name>`, description: "Search spotify for artists, albums or songs.", data: { sample: true }, icon: "https://spotify.com/favicon.ico" };
+const artistHelp = { id: 'artist', name: `${command}${commandDelim}artist <artist name>`, description: "Search spotify for artists.", data: { sample: true }, icon: "https://spotify.com/favicon.ico" };
+const trackHelp = { id: 'track', name: `${command}${commandDelim}track <track name>`, description: "Search spotify for tracks.", data: { sample: true }, icon: "https://spotify.com/favicon.ico" };
+const albumHelp = { id: 'album', name: `${command}${commandDelim}album <album name>`, description: "Search spotify for albums.", data: { sample: true }, icon: "https://spotify.com/favicon.ico" };
 const defaultHelpResult = [defaultHelp];
 
 const helpRules = [
-    { matchString: '/music ', results: defaultHelpResult, scope: 'all' },
-    { matchString: '/music/', results: scopeChoiceHelpResult },
-    { matchString: '/music/track ', results: [trackHelp], scope: 'track' },
-    { matchString: '/music/album ', results: [albumHelp], scope: 'album' },
-    { matchString: '/music/artist ', results: [artistHelp], scope: 'artist' },
+    { matchString: `${command} `, results: defaultHelpResult, scope: 'all' },
+    { matchString: `${command}${commandDelim}track `, results: [trackHelp], scope: 'track' },
+    { matchString: `${command}${commandDelim}album `, results: [albumHelp], scope: 'album' },
+    { matchString: `${command}${commandDelim}artist `, results: [artistHelp], scope: 'artist' },
 ];
-
-const processQuery = (query) => {
-    for(let i=0; i<helpRules.length; i++) {
-        const r = helpRules[helpRules.length-1-i];
-        if (query.indexOf(r.matchString) == 0) {
-            return { q: query.replace(r.matchString, ''), scope: r.scope }
-        }
-    }
-    return { q: '', scope: ''}
-}
 
 const formatName = (type, name, artists, album) => {
     switch(type) {
@@ -38,8 +29,9 @@ const formatName = (type, name, artists, album) => {
 }
 
 const search = async (query) => {
-    const { q, scope } = processQuery(query);
+    const { q, scope } = processQuery(query, helpRules);
     if (q && q !== "") {
+        console.log(`doing a spotify query: q = ${q}, query: ${query}, scope: ${scope}`)
         const res = await fetch(`/spotify?q=${q}&scope=${scope}`);
         const results = await res.json();
         return results.map(({ id, name, uri, weburl, artists, album, type }) => ({
