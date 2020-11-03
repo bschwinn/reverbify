@@ -10,8 +10,11 @@ export const getHelp = (rules, query) => {
 
 // process query and return first matching rule
 export const processQuery = (query, rules) => {
+    rules.sort((a, b) => {
+        return b.matchString.length - a.matchString.length;
+    });
     for(let i=0; i<rules.length; i++) {
-        const r = rules[rules.length-1-i];
+        const r = rules[i];
         if (query.indexOf(r.matchString) == 0) {
             return { q: query.replace(r.matchString, ''), scope: r.scope }
         }
