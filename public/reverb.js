@@ -11,7 +11,6 @@ const helpRules = [
 const search = async (query) => {
     const { q, scope } = processQuery(query, helpRules);
     if (q && q !== "") {
-        console.log(`doing a reverb query: q = ${q}, query: ${query}`)
         const res = await fetch(`/reverb?q=${q}`);
         const listings = await res.json();
         return listings.map(({ id, title, description, _links, photos }) => ({

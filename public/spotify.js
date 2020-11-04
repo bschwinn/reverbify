@@ -31,7 +31,6 @@ const formatName = (type, name, artists, album) => {
 const search = async (query) => {
     const { q, scope } = processQuery(query, helpRules);
     if (q && q !== "") {
-        console.log(`doing a spotify query: q = ${q}, query: ${query}, scope: ${scope}`)
         const res = await fetch(`/spotify?q=${q}&scope=${scope}`);
         const results = await res.json();
         return results.map(({ id, name, uri, artists, album, type, thumbnail }) => ({
@@ -47,7 +46,7 @@ const search = async (query) => {
 
 const showItem = (item) => {
     console.log('showing item', item);
-    window.open(item.data.uri, 'spotify')
+    fin.System.openUrlWithBrowser(item.data.uri);
 }
 
 export default { search, showItem }

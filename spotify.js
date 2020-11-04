@@ -53,7 +53,6 @@ const runSearch = async (query, scope, refresh) => {
         scope = 'album,track,artist';
     }
     const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=${scope}`
-    console.log(`calling spotify: ${url}`)
     const params = { method: 'GET', headers: { 'Authorization': `Bearer ${accessToken}` } }
     const resp = await fetch(url, params)
     if (refresh!==false && resp.status === 401) {
